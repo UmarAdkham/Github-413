@@ -3,10 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Gavharoy</title>
 </head>
 <body>
-    <h1><em>Hammaga salom</em></h1>
-    <h1><em>men shu yerdaman</em></h1>
+
+    <!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Qora Mushuk — Carousel Card (Glass Design)</title>
+  <style>
+    :root{
+      --card-bg: rgba(255,255,255,0.06);
+      --card-border: rgba(255,255,255,0.12);
+      --accent: rgba(255,255,255,0.85);
+      --muted: rgba(255,255,255,0.7);
+      --glass-radius: 18px;
+      --shadow: 0 8px 30px rgba(2,6,23,0.6);
+      --fw-bold: 600;
+      --fw-normal: 400;
+      --transition: 300ms cubic-bezier(.2,.9,.3,1);
+    }
+
+    /* Basic page layout */
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: linear-gradient(180deg,#0f1724 0%, #071025 60%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:32px;
+      color:var(--accent);
+    }
+
+    /* Card */
+    .card{
+      width:360px;
+      max-width:calc(100% - 48px);
+      border-radius:var(--glass-radius);
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border: 1px solid var(--card-border);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px) saturate(120%);
+      -webkit-backdrop-filter: blur(10px) saturate(120%);
+      overflow:hidden;
+      transition:transform var(--transition), box-shadow var(--transition);
+    }
+
+    .card:hover{ transform: translateY(-6px); box-shadow: 0 18px 50px rgba(2,6,23,0.75);} 
+
+    /* Carousel area */
+    .carousel-wrap{
+      position:relative;
+      height:220px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.05));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .carousel{
+      width:100%;
+      height:100%;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .carousel img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      position:absolute;
+      left:0;top:0;
+      opacity:0;
+      transform:scale(1.02);
+      transition:opacity 360ms ease, transform 360ms ease;
+    }
+
+    .carousel img.active{
+      opacity:1;
+      transform:scale(1);
+      position:relative;
+    }
+
+    /* Controls */
+    .control{
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      width:42px;height:42px;border-radius:10px;
+      background: rgba(0,0,0,0.28);
+      border:1px solid rgba(255,255,255,0.06);
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;backdrop-filter: blur(6px);
+      transition:background 160ms;
+    }
+    .control:hover{background: rgba(0,0,0,0.38);} 
+    .control svg{width:18px;height:18px;fill:var(--accent);} 
+    .control.prev{left:12px}
+    .control.next{right:12px}
+
+    /* Card body */
+    .card-body{
+      padding:18px 18px 20px 18px;
+      display:flex;flex-direction:column;gap:8px;
+    }
+
+    .title{
+      font-size:18px; font-weight:var(--fw-bold); letter-spacing:0.2px; color:var(--accent);
+      display:flex;align-items:center;gap:8px;
+    }
+
+    .subtitle{
+      font-size:13px;color:var(--muted);margin-top:2px;
+    }
+
+    .desc{
+      font-size:14px;color:rgba(255,255,255,0.85);line-height:1.45;margin-top:8px;flex:1;
+    }
+
+    .indicators{
+      display:flex;gap:8px;margin-top:12px;align-items:center;justify-content:flex-start;
+    }
+    .dot{
+      width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.12);cursor:pointer;transition:transform 160ms;
+    }
+    .dot.active{background:var(--accent);transform:scale(1.25);} 
+
+    /* small note */
+    .meta{font-size:12px;color:rgba(255,255,255,0.55);margin-top:10px}
+
+    /* Responsive tweaks */
+    @media (min-width:720px){
+      .card{width:420px}
+      .carousel-wrap{height:240px}
+    }
+  </style>
+</head>
+<body>
+  <article class="card" aria-label="Qora mushuk carousel card">
+
+    <div class="carousel-wrap">
+      <div class="carousel" id="carousel">
+        <!-- Replace the src attributes with your 3 chosen images. Keep at most 3 images. -->
+        <img src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?q=80&w=1200&auto=format&fit=crop" alt="Qora mushuk - 1" class="active" data-index="0">
+        <img src="https://images.unsplash.com/photo-1543852786-1cf6624b9987?q=80&w=1200&auto=format&fit=crop" alt="Qora mushuk - 2" data-index="1">
+        <img src="https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?q=80&w=1200&auto=format&fit=crop" alt="Qora mushuk - 3" data-index="2">
+
+        <button class="control prev" id="prevBtn" aria-label="Oldingi">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+        </button>
+        <button class="control next" id="nextBtn" aria-label="Keyingi">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div>
+        <div class="title">Qora Mushuk</div>
+        <div class="subtitle">Sirli, muloyim va sezgir</div>
+      </div>
+
+      <p class="desc">Qora mushuk eski afsonalarda turfa ma'nolarga ega: ba'zi madaniyatlarda omad va himoya ramzi, boshqalarida esa sirli hayvon sifatida tasvirlanadi. Ularning nozik qadam tashlashi va ko'zlarining yoshga o'xshash nur taratishi ko'pchilikni o'ziga tortadi.</p>
+
+      <div class="indicators" id="indicators" role="tablist" aria-label="Rasmlar indikatorlari">
+        <span class="dot active" data-index="0" role="tab" aria-selected="true" aria-label="Rasm 1"></span>
+        <span class="dot" data-index="1" role="tab" aria-selected="false" aria-label="Rasm 2"></span>
+        <span class="dot" data-index="2" role="tab" aria-selected="false" aria-label="Rasm 3"></span>
+      </div>
+
+      <div class="meta">3 ta surat — Title, Image, Description tarkib bilan.</div>
+    </div>
+
+  </article>
+
+  <script>
+    (function(){
+      const imgs = Array.from(document.querySelectorAll('.carousel img'));
+      const dots = Array.from(document.querySelectorAll('.dot'));
+      const prev = document.getElementById('prevBtn');
+      const next = document.getElementById('nextBtn');
+      let index = imgs.findIndex(i => i.classList.contains('active')) || 0;
+      const total = imgs.length;
+
+      function show(i){
+        imgs.forEach(img => img.classList.remove('active'));
+        dots.forEach(d => { d.classList.remove('active'); d.setAttribute('aria-selected','false'); });
+        const idx = (i + total) % total;
+        imgs[idx].classList.add('active');
+        dots[idx].classList.add('active');
+        dots[idx].setAttribute('aria-selected','true');
+        index = idx;
+      }
+
+      prev.addEventListener('click', ()=> show(index-1));
+      next.addEventListener('click', ()=> show(index+1));
+
+      dots.forEach(d => d.addEventListener('click', e => show(Number(e.currentTarget.dataset.index))));
+
+      // Keyboard accessibility
+      document.addEventListener('keydown', (e)=>{
+        if(e.key === 'ArrowLeft') show(index-1);
+        if(e.key === 'ArrowRight') show(index+1);
+      });
+
+      // Optional: gentle auto-play (comment out if undesired)
+      let autoplay = true;
+      let interval = 4500;
+      let timer = null;
+      function startAuto(){ if(!autoplay) return; timer = setInterval(()=> show(index+1), interval); }
+      function stopAuto(){ if(timer) clearInterval(timer); timer = null; }
+      document.querySelector('.carousel').addEventListener('mouseenter', stopAuto);
+      document.querySelector('.carousel').addEventListener('mouseleave', startAuto);
+      startAuto();
+
+      // If you accidentally use more than 3 images, indicators will remain for first 3. Keep images <= 3 per requirement.
+    })();
+  </script>
+</body>
+</html>
+    
 </body>
 </html>
