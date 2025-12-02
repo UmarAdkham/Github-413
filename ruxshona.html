@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rasm Galereyasi — Lightbox</title>
+
+  <style>
+    body{
+      margin:0;
+      font-family:Arial;
+      background:#0e1420;
+      color:white;
+      padding:20px;
+    }
+
+    h2{ text-align:center; margin-bottom:20px }
+
+    /* GALEREYA GRID */
+    .gallery{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+      gap:16px;
+    }
+
+    .gallery img{
+      width:100%;
+      height:180px;
+      object-fit:cover;
+      border-radius:10px;
+      cursor:pointer;
+      transition:0.3s;
+    }
+    .gallery img:hover{
+      transform:scale(1.04);
+      box-shadow:0 6px 20px rgba(0,0,0,0.6);
+    }
+
+    /* LIGHTBOX */
+    .lightbox{
+      position:fixed;
+      top:0; left:0;
+      width:100%;
+      height:100%;
+      background:rgba(0,0,0,0.85);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:1000;
+    }
+    .lightbox img{
+      max-width:90%;
+      max-height:80vh;
+      border-radius:12px;
+      box-shadow:0 0 25px rgba(0,0,0,0.9);
+    }
+
+    /* CLOSE BUTTON */
+    .close{
+      position:absolute;
+      top:30px;
+      right:40px;
+      font-size:40px;
+      cursor:pointer;
+      color:white;
+      font-weight:bold;
+    }
+
+    /* NAV BUTTONS */
+    .nav-btn{
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      font-size:50px;
+      color:white;
+      cursor:pointer;
+      user-select:none;
+      font-weight:bold;
+    }
+    .prev{ left:40px }
+    .next{ right:40px }
+  </style>
+</head>
+<body>
+
+<h2>📸 Chiroyli Rasm Galereyasi</h2>
+
+<!-- GALEREYA -->
+<div class="gallery">
+  <img src="https://picsum.photos/id/1011/600/400" data-index="0">
+  <img src="https://picsum.photos/id/1015/600/400" data-index="1">
+  <img src="https://picsum.photos/id/1025/600/400" data-index="2">
+  <img src="https://picsum.photos/id/1035/600/400" data-index="3">
+  <img src="https://picsum.photos/id/1042/600/400" data-index="4">
+  <img src="https://picsum.photos/id/1050/600/400" data-index="5">
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <span class="close" id="closeBtn">&times;</span>
+  <span class="nav-btn prev" id="prevBtn">&#10094;</span>
+  <img id="lightImg">
+  <span class="nav-btn next" id="nextBtn">&#10095;</span>
+</div>
+
+<script>
+  const galleryImages = document.querySelectorAll(".gallery img");
+  const lightbox = document.getElementById("lightbox");
+  const lightImg = document.getElementById("lightImg");
+  const closeBtn = document.getElementById("closeBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const prevBtn = document.getElementById("prevBtn");
+
+  let currentIndex = 0;
+
+  // Galereyadagi rasm bosilganda lightbox ochiladi
+  galleryImages.forEach(img => {
+    img.addEventListener("click", () => {
+      currentIndex = parseInt(img.dataset.index);
+      showImage();
+      lightbox.style.display = "flex";
+    });
+  });
+
+  function showImage(){
+    lightImg.src = galleryImages[currentIndex].src;
+  }
+
+  // Keyingi rasm
+  nextBtn.onclick = () => {
+    currentIndex = (currentIndex + 1) % galleryImages.length;
+    showImage();
+  };
+
+  // Oldingi rasm
+  prevBtn.onclick = () => {
+    currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+    showImage();
+  };
+
+  // Yopish
+  closeBtn.onclick = () => lightbox.style.display = "none";
+
+  // Qora fon bosilsa ham yopiladi
+  lightbox.onclick = (e) => {
+    if(e.target === lightbox) lightbox.style.display = "none";
+  };
+</script>
+
+</body>
+</html>
